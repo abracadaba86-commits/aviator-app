@@ -20,7 +20,14 @@ if file is not None:
     time_col = st.selectbox("Coluna de tempo", cols)
     value_col = st.selectbox("Coluna do multiplicador", cols)
 
-    df[time_col] = pd.to_datetime(df[time_col])
+    df[time_col] = pd.to_datetime(
+    df[time_col],
+    errors="coerce",
+    dayfirst=True
+)
+
+df = df.dropna(subset=[time_col])
+
     df = df.sort_values(time_col)
 
     df["minuto"] = df[time_col].dt.floor("min")
@@ -38,3 +45,4 @@ if file is not None:
     spikes = df[df[value_col] >= threshold]
 
     st.metric("Total de picos 10x+", len(spikes))
+
