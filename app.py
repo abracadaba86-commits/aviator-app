@@ -27,8 +27,7 @@ if file is not None:
 )
 
 df = df.dropna(subset=[time_col])
-
-    df = df.sort_values(time_col)
+df = df.sort_values(time_col)
 
     df["minuto"] = df[time_col].dt.floor("min")
 
@@ -45,4 +44,5 @@ df = df.dropna(subset=[time_col])
     spikes = df[df[value_col] >= threshold]
 
     st.metric("Total de picos 10x+", len(spikes))
+
 
